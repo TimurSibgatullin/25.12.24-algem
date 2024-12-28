@@ -42,5 +42,6 @@ public class MainTest {
 
         System.out.println("Получить количество столбцов: " + m1.columns());
 
+        System.out.println("Вычислить определитель: " + m1.det());
     }
 }

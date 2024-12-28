@@ -3,6 +3,7 @@ package ru.itis.inf403;
 public class LAVector {
 
     private float[] components;
+    private int swaps;
 
     public LAVector(int size) {
         this.components = new float[size];

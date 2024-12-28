@@ -51,6 +51,8 @@ public class Matrix {
 
     public float det() {
         //TODO вычислить определитель
+        Determinator det = new Determinator(this.components);
+        det.determine();
         return 0;
     }
 
@@ -64,6 +66,10 @@ public class Matrix {
 
     public Matrix transp() {
         return null;
+    }
+
+    public float[][] getComponents() {
+        return components;
     }
 
     public String toString() {
