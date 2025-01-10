@@ -52,20 +52,47 @@ public class Matrix {
     public float det() {
         //TODO вычислить определитель
         Determinator det = new Determinator(this.components);
-        det.determine();
-        return 0;
+        return det.determine();
     }
 
-    public LAVector multRVector(LAVector vector) {
-        return null;
+    public Matrix multRVector(LAVector vector) {
+        if (columns() == 1) {
+            float[][] temp = new float[rows()][vector.getSize()];
+            for (int i = 0; i < rows(); i++) {
+                for (int j = 0; j < vector.getSize(); j++) {
+                    temp[i][j] = components[i][0] * vector.getComponent(j);
+                }
+            }
+            return new Matrix(temp);
+        } else {
+            return null;
+        }
     }
 
     public LAVector multLVector(LAVector vector) {
-        return null;
+        float[] res = new float[rows()];
+        if (rows() == vector.getSize()) {
+            for (int i = 0; i < columns(); i++) {
+                float temp = 0;
+                for (int j = 0; j < vector.getSize(); j++) {
+                    temp += vector.getComponent(j) * getComponents()[j][i];
+                }
+                res[i] = temp;
+            }
+            return new LAVector(res);
+        } else {
+            return null;
+        }
     }
 
     public Matrix transp() {
-        return null;
+        float[][] res = new float[columns()][rows()];
+        for (int i = 0; i < rows(); i++) {
+            for (int j = 0; j < columns(); j++) {
+                res[j][i] = components[i][j];
+            }
+        }
+        return new Matrix(res);
     }
 
     public float[][] getComponents() {

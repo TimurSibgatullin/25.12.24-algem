@@ -7,7 +7,7 @@ public class Determinator extends Matrix{
         super(components);
     }
 
-    public int fact(int n) {
+    private int fact(int n) {
         int res = 1;
         for (int i = 1; i <= n; i++) {
             res *= i;
@@ -18,6 +18,7 @@ public class Determinator extends Matrix{
     public float determine() {
         float[][] matrix = this.getComponents();
         if (this.columns() == this.rows()) {
+            float result = 0;
             int n = this.columns();
             this.permutations = new int[fact(n)][];
             int[] src = new int[n];
@@ -25,18 +26,29 @@ public class Determinator extends Matrix{
                 src[i] = i;
             }
             this.permute(src, 0, n-1, 0);
-            String res = "";
-            for (int[] row : this.permutations) {
-                for (int element : row) {
-                    res += element + " ";
+            for (int i = 0; i < permutations.length; i++) {
+                float multiply = 1;
+                for (int j = 0; j < permutations[i].length; j++) {
+                    multiply *= matrix[j][permutations[i][j]];
                 }
-                res += "\n";
+                result += (float) (Math.pow(-1.0, (inversions(permutations[i]) % 2 + 2))) * multiply;
             }
-            System.out.println(res.substring(0, res.length() - 2));
-            return 0;
+            return result;
         } else {
             return 0;
         }
+    }
+
+    private int inversions(int[] src) {
+        int res = 0;
+        for (int i = 0; i < src.length; i++) {
+            for (int j = i; j < (src.length - 1); j++) {
+                if (src[i] > src[j + 1]) {
+                    res += 1;
+                }
+            }
+        }
+        return res;
     }
 
     private int permute(int[] src, int l, int r, int idx) {
@@ -53,12 +65,11 @@ public class Determinator extends Matrix{
         return idx;
     }
 
-    public int[] swap(int[] src, int i, int j) {
+    private int[] swap(int[] src, int i, int j) {
         int temp;
         temp = src[i];
         src[i] = src[j];
         src[j] = temp;
         return src;
     }
-
 }
